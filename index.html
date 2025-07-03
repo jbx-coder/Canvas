@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多功能画板</title>
+    <link href="./css.css" rel="stylesheet">
+    
+</head>
+<body>
+    <button class="toggle-toolbar" id="toggle-toolbar">隐藏工具栏</button>
+    
+    <div class="toolbar" id="toolbar">
+        <div class="color-btn active" id="black" title="黑色"></div>
+        <div class="color-btn" id="red" title="红色"></div>
+        <div class="color-btn" id="blue" title="蓝色"></div>
+        <div class="color-btn" id="green" title="绿色"></div>
+        
+        <button id="eraser" title="橡皮擦"></button>
+        <button id="screenshot">保存</button>
+        <button id="delete">删档</button>
+    </div>
+    
+    <div class="canvas-container" id="canvas-container">
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+    
+    <script src="./js.js"></script>
+</body>
+</html>
