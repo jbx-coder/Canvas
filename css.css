@@ -1,3 +1,4 @@
+
         * {
             margin: 0;
             padding: 0;
@@ -29,10 +30,10 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             background-color: rgba(255, 255, 255, 0.9);
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
             align-items: center;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
@@ -45,8 +46,7 @@
         }
         
         button {
-            font-size: 3%;
-            padding: 6px 10px;
+            padding: 8px 15px;
             cursor: pointer;
             border: none;
             border-radius: 4px;
@@ -59,8 +59,8 @@
         }
         
         .color-btn {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
@@ -68,7 +68,7 @@
         
         .color-btn.active {
             border-color: #ffeb3b;
-            box-shadow: 0 0 2px rgba(255, 235, 59, 0.7);
+            box-shadow: 0 0 5px rgba(255, 235, 59, 0.7);
         }
         
         #red { background-color: red; }
@@ -77,8 +77,8 @@
         #black { background-color: black; }
         
         #eraser {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background-color: white;
             border: 1px solid #ccc;
@@ -88,6 +88,21 @@
         #eraser.active {
             border-color: #ffeb3b;
             box-shadow: 0 0 5px rgba(255, 235, 59, 0.7);
+        }
+        
+        .size-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .size-slider {
+            width: 100px;
+        }
+        
+        .size-value {
+            min-width: 30px;
+            text-align: center;
         }
         
         .canvas-container {

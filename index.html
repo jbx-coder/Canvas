@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>多功能画板</title>
-    <link href="./css.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="css.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <button class="toggle-toolbar" id="toggle-toolbar">隐藏工具栏</button>
@@ -17,14 +17,21 @@
         <div class="color-btn" id="green" title="绿色"></div>
         
         <button id="eraser" title="橡皮擦"></button>
-        <button id="screenshot">保存</button>
-        <button id="delete">删档</button>
+        
+        <div class="size-control">
+            <span>粗细:</span>
+            <input type="range" min="1" max="50" value="5" class="size-slider" id="size-slider">
+            <span class="size-value" id="size-value">5</span>
+        </div>
+        
+        
+        <button id="delete">清屏</button>
     </div>
     
     <div class="canvas-container" id="canvas-container">
         <canvas id="drawing-canvas"></canvas>
     </div>
     
-    <script src="./js.js"></script>
+    <script src="js.js"></script>
 </body>
 </html>

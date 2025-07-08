@@ -6,15 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const colorButtons = document.querySelectorAll('.color-btn');
     const eraserBtn = document.getElementById('eraser');
     const clearBtn = document.getElementById('clear');
-    const screenshotBtn = document.getElementById('screenshot');
     const deleteBtn = document.getElementById('delete');
     const toggleToolbarBtn = document.getElementById('toggle-toolbar');
     const toolbar = document.getElementById('toolbar');
+    const sizeSlider = document.getElementById('size-slider');
+    const sizeValue = document.getElementById('size-value');
     
     // 画板状态
     let isDrawing = false;
     let currentColor = 'black';
     let currentTool = 'pen';
+    let brushSize = 5;
     let startX, startY;
     
     // 初始化画布大小
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function setupCanvas() {
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-        ctx.lineWidth = currentTool === 'eraser' ? 20 : 5; // 橡皮擦尺寸较大
+        ctx.lineWidth = brushSize;
         ctx.strokeStyle = currentColor;
     }
     
@@ -43,6 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     ctx.drawImage(img, 0, 0);
                 };
                 img.src = drawingData.imageData;
+                brushSize = drawingData.brushSize || 5;
+                sizeSlider.value = brushSize;
+                sizeValue.textContent = brushSize;
             } catch (e) {
                 console.error('Failed to load drawing:', e);
             }
@@ -53,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveDrawing() {
         const drawingData = {
             imageData: canvas.toDataURL('image/png'),
+            brushSize: brushSize,
             timestamp: new Date().getTime()
         };
         localStorage.setItem('jbx-coder-canvas', JSON.stringify(drawingData));
@@ -70,15 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
         clearCanvas();
     }
     
-    // 截屏
-    function takeScreenshot() {
-        const dataUrl = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.download = 'drawing-' + new Date().toISOString().slice(0, 10) + '.png';
-        link.href = dataUrl;
-        link.click();
-    }
-    
     // 初始化
     initCanvasSize();
     setupCanvas();
@@ -94,6 +91,13 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleToolbarBtn.addEventListener('click', function() {
         toolbar.classList.toggle('hidden');
         this.textContent = toolbar.classList.contains('hidden') ? '显示工具栏' : '隐藏工具栏';
+    });
+    
+    // 画笔大小调节
+    sizeSlider.addEventListener('input', function() {
+        brushSize = parseInt(this.value);
+        sizeValue.textContent = brushSize;
+        setupCanvas();
     });
     
     // 颜色选择
@@ -115,13 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.add('active');
         colorButtons.forEach(btn => btn.classList.remove('active'));
         canvas.style.cursor = 'crosshair';
-        setupCanvas(); // 更新橡皮擦大小
+        setupCanvas();
     });
     
-
+    // 清屏
     
-    // 截屏
-    screenshotBtn.addEventListener('click', takeScreenshot);
     
     // 删档
     deleteBtn.addEventListener('click', deleteDrawing);
@@ -146,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentTool === 'eraser') {
             ctx.globalCompositeOperation = 'destination-out';
             ctx.beginPath();
-            ctx.arc(startX, startY, ctx.lineWidth / 2, 0, Math.PI * 2);
+            ctx.arc(startX, startY, brushSize / 2, 0, Math.PI * 2);
             ctx.fill();
         } else {
             ctx.globalCompositeOperation = 'source-over';
@@ -174,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (currentTool === 'eraser') {
             ctx.beginPath();
-            ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+            ctx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
             ctx.fill();
         } else {
             ctx.lineTo(x, y);
